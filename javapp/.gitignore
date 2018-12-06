@@ -1,0 +1,10 @@
+bin/
+.vscode/
+.settings
+build
+*.swp
+*.tmp
+*.temp
+.git/
+target/
+work/
