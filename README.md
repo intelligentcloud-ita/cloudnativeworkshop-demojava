@@ -13,11 +13,11 @@ Demo Java for Cloud Native Workshop (inner loop and outer loop)
     - `helm init` configures tiller on the AKS cluster on Azure
     - `draft init` configures Draft locally
     
-**ATTENTION**: In the **javapp** folder you can find the Java application, the Dockerfile and the *chart* folder with the helm charts already created. So the steps 1-2 are already done and you can procees with the step 3.
+**ATTENTION**: In the **javapp** folder you can find the Java application, the Dockerfile and the *chart* folder with the helm charts already created. So the steps 1-4 are already done and you can procees with the step 5.
 
 1) From the command prompt run `draft create -p java` 
 2) The application uses a MySQL database so you have to modify a little bit the auto-generated charts to add the connection string
-  a) Insert at the end of the file *charts/JavaApplication/templates/deployment.yaml*
+3) Insert at the end of the file *charts/JavaApplication/templates/deployment.yaml*
     ```
           env:
               - name: host
@@ -29,7 +29,7 @@ Demo Java for Cloud Native Workshop (inner loop and outer loop)
               - name: password
                 value: {{ .Values.env.password }}
     ```
-    b) Insert in *charts/JavaApplication/values.yaml* the following variables
+4) Insert in *charts/JavaApplication/values.yaml* the following variables
     ```
           env:
             host: <hostname>
@@ -37,19 +37,19 @@ Demo Java for Cloud Native Workshop (inner loop and outer loop)
             username: <username>
             password: <password>
     ```
-3) Configure Draft to push the built image in Azure Container Registry
+5) Configure Draft to push the built image in Azure Container Registry
     - `draft config set registry <acr_name>.azurecr.io` 
     - `docker login <acr_name>.azurecr.io` 
-4) `draft up` launches a pipeline with building the image from Dockerfile, pushing the image in the configured ACR and realesing the container on the AKS cluster
-13) `draft connect` to create a tunnel between your development machine and the AKS cluster. For debugging the container on AKS locally, if you are using VS Code you have to:
-  a) Install the [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
-  b) Add a configuration to the *launch.json* file
-  ```
-  {
-            "type": "java",
-            "name": "Debug (Attach)",
-            "request": "attach",
-            "hostName": "localhost",
-            "port": <debug-port>
-  }
-  ```
+6) `draft up` launches a pipeline with building the image from Dockerfile, pushing the image in the configured ACR and realesing the container on the AKS cluster
+7) `draft connect` to create a tunnel between your development machine and the AKS cluster. For debugging the container on AKS locally, if you are using VS Code you have to some changes
+8) Install the [Java Extension Pack](https://marketplace.visualstudio.com/items?itemName=vscjava.vscode-java-pack)
+9) Add a configuration to the *launch.json* file
+      ```
+      {
+                "type": "java",
+                "name": "Debug (Attach)",
+                "request": "attach",
+                "hostName": "localhost",
+                "port": <debug-port>
+      }
+      ```
