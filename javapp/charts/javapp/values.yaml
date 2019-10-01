@@ -10,8 +10,6 @@ service:
   externalPort: 80
   internalPort: 8080
   debugPort: 5005
-ingress:
-  enabled: false
 env:
   host: <server_name>.mysql.database.azure.com
   database: <db_name>
